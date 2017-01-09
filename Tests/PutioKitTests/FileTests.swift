@@ -35,14 +35,6 @@ class FileTests: XCTestCase {
         XCTAssertEqual(file.accessed, true)
         XCTAssertEqual(file.createdAt, "2018-01-09 09:59:00")
         XCTAssertEqual(file.screenshot, "http://example.com/screenshot.png")
-        
-        Putio.getTransfers { transfers in
-            print(transfers)
-        }
-        
-        Putio.cleanTransfers { completed in
-            print(completed)
-        }
     }
     
 }
