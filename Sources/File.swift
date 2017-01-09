@@ -122,6 +122,20 @@ extension File {
             completionHandler(file["start_from"] as? Int ?? 0)
         }
     }
+    
+    /// Convert the request file to MP4
+    ///
+    /// - Parameter completionHandler: The response handler
+    public func convertToMp4(completionHandler: @escaping (Bool) -> Void) {
+        Putio.request(Router.convertToMp4(id)) { json, error in
+            guard error == nil else {
+                completionHandler(false)
+                return
+            }
+            
+            completionHandler(true)
+        }
+    }
 
 }
 
