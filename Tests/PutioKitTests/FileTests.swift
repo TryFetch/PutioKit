@@ -17,19 +17,21 @@ class FileTests: XCTestCase {
         Putio.testing = true
     }
     
+    let data: [String:Any] = [
+        "id": 1234,
+        "name": "A lovely movie file.mp4",
+        "is_shared": true,
+        "is_mp4_available": true,
+        "parent_id": 92,
+        "size": 1024,
+        "content_type": "video/mp4",
+        "first_accessed_at": 83664758,
+        "created_at": "2018-01-09 09:59:00",
+        "screenshot": "http://example.com/screenshot.png"
+    ]
+    
     func testJSONInitializer() {
-        let file = File(json: [
-            "id": 1234,
-            "name": "A lovely movie file.mp4",
-            "is_shared": true,
-            "is_mp4_available": true,
-            "parent_id": 92,
-            "size": 1024,
-            "content_type": "video/mp4",
-            "first_accessed_at": 83664758,
-            "created_at": "2018-01-09 09:59:00",
-            "screenshot": "http://example.com/screenshot.png"
-        ])
+        let file = File(json: data)
         
         XCTAssertEqual(file.id, 1234)
         XCTAssertEqual(file.name, "A lovely movie file.mp4")
@@ -47,19 +49,6 @@ class FileTests: XCTestCase {
         
         MockRequest.shared.statusCode = 200
         
-        let data: [String:Any] = [
-            "id": 1234,
-            "name": "A lovely movie file.mp4",
-            "is_shared": true,
-            "is_mp4_available": true,
-            "parent_id": 92,
-            "size": 1024,
-            "content_type": "video/mp4",
-            "first_accessed_at": 83664758,
-            "created_at": "2018-01-09 09:59:00",
-            "screenshot": "http://example.com/screenshot.png"
-        ]
-        
         let file = File(json: data)
         
         MockRequest.shared.value = [
@@ -74,6 +63,38 @@ class FileTests: XCTestCase {
             XCTAssertEqual(files.first?.id, file.id)
             
             expect.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+        
+    }
+    
+    func testRename() {
+        
+        let file = File(json: data)
+        
+        MockRequest.shared.value = "Success"
+        
+        let expect = expectation(description: "Response will be okay")
+        
+        file.rename(name: "New filename") { completed in
+            XCTAssertTrue(completed)
+            
+            expect.fulfill()
+        }
+        
+        MockRequest.shared.statusCode = 500
+        
+        let expect2 = expectation(description: "Response will be bad")
+        
+        file.rename(name: "Hellow world") { completed in
+            XCTAssertFalse(completed)
+            
+            expect2.fulfill()
         }
         
         waitForExpectations(timeout: 1) { error in
