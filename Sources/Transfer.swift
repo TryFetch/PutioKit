@@ -40,7 +40,7 @@ public final class Transfer {
     public var extract = false
 
     /// The current ration of downloaded to uploaded
-    public var currentRatio: Float = 0
+    public var currentRatio: Double = 0.0
 
     /// The size of the file in bytes
     public var size = 0
@@ -112,11 +112,13 @@ public final class Transfer {
      */
     internal convenience init(json: [String:Any]) {
         self.init()
+        
+        
         uploaded = (json["uploaded"] as? Int) ?? 0
         estimatedTime = (json["estimated_time"] as? Int) ?? 0
         peersGettingFromUs = (json["peers_getting_from_us"] as? Int) ?? 0
         extract = (json["extract"] as? Bool) ?? false
-        currentRatio = (json["currentRatio"] as? Float) ?? 0.0
+        currentRatio = (json["currentRatio"] as? Double) ?? 0.0
         size = (json["size"] as? Int) ?? 0
         upSpeed = (json["up_speed"] as? Int) ?? 0
         id = (json["id"] as? Int) ?? 0
