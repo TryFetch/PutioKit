@@ -25,9 +25,26 @@ public final class Putio {
     ///   - request: The request to make. This will come from the Router.
     ///   - completionHandler: The handler that will process the response
     /// - Returns: The raw request that was used
-    @discardableResult internal class func request(_ request: URLRequestConvertible, completionHandler: @escaping (DataResponse<Any>) -> Void) -> DataRequest {
+    @discardableResult internal class func request(_ request: URLRequestConvertible, completionHandler: @escaping ([String:Any]?, Error?) -> Void) -> DataRequest {
         return Alamofire.request(request)
-            .responseJSON(completionHandler: completionHandler)
+            .responseJSON { response in
+                if let error = response.result.error {
+                    completionHandler(nil, error)
+                    return
+                }
+                
+                guard let status = response.response?.statusCode, case 200 ..< 300 = status else {
+                    completionHandler(nil, PutioError.invalidStatusCode)
+                    return
+                }
+                
+                guard let json = response.result.value as? [String:Any] else {
+                    completionHandler(nil, PutioError.couldNotParseJSON)
+                    return
+                }
+                
+                completionHandler(json, nil)
+            }
     }
 
     fileprivate init() {}

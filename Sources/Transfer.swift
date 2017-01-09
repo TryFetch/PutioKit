@@ -157,8 +157,8 @@ extension Transfer {
     ///
     /// - Parameter completionHandler: The response handler
     public func retry(completionHandler: @escaping (Bool) -> Void) {
-        Putio.request(Router.retryTransfer(id)) { response in
-            guard let status = response.response?.statusCode, case 200 ..< 300 = status else {
+        Putio.request(Router.retryTransfer(id)) { json, error in
+            guard error == nil else {
                 completionHandler(false)
                 return
             }
@@ -177,14 +177,14 @@ extension Putio {
     /// Fetch transfers from the API
     ///
     /// - Parameter completionHandler: The response handler
-    public class func getTransfers(completionHandler: @escaping ([Transfer]) -> Void) {
-        Putio.request(Router.transfers) { response in
-            guard let json = response.result.value as? [String:Any], let transfers = json["transfers"] as? [[String:Any]] else {
-                completionHandler([])
+    public class func getTransfers(completionHandler: @escaping ([Transfer], Error?) -> Void) {
+        Putio.request(Router.transfers) { json, error in
+            guard let json = json, let transfers = json["transfers"] as? [[String:Any]] else {
+                completionHandler([], error)
                 return
             }
             
-            completionHandler(transfers.flatMap(Transfer.init))
+            completionHandler(transfers.flatMap(Transfer.init), error)
         }
     }
     
@@ -195,14 +195,14 @@ extension Putio {
     ///   - parent: The parent directory the file should be added to. Defaults to the root directory.
     ///   - extract: Whether zip files should be extracted. Defaults to false.
     ///   - completionHandler: The response handler
-    public class func addTransfer(fromUrl url: String, parent: Int = 0, extract: Bool = false, completionHandler: @escaping (Transfer?) -> Void) {
-        Putio.request(Router.addTransfer(url, parent, extract)) { response in
-            guard let json = response.result.value as? [String:Any] else {
-                completionHandler(nil)
+    public class func addTransfer(fromUrl url: String, parent: Int = 0, extract: Bool = false, completionHandler: @escaping (Transfer?, Error?) -> Void) {
+        Putio.request(Router.addTransfer(url, parent, extract)) { json, error in
+            guard let json = json else {
+                completionHandler(nil, error)
                 return
             }
             
-            completionHandler(Transfer(json: json))
+            completionHandler(Transfer(json: json), error)
         }
     }
 
@@ -211,8 +211,8 @@ extension Putio {
     ///
     /// - Parameter completionHandler: The response handler
     public class func cleanTransfers(completionHandler: @escaping (Bool) -> Void) {
-        Putio.request(Router.cleanTransfers) { response in
-            guard let status = response.response?.statusCode, case 200 ..< 300 = status else {
+        Putio.request(Router.cleanTransfers) { json, error in
+            guard error == nil else {
                 completionHandler(false)
                 return
             }
@@ -228,8 +228,8 @@ extension Putio {
     ///   - completionHandler: The response handler
     public func cancel(transfers: [Transfer], completionHandler: @escaping (Bool) -> Void) {
         let ids = transfers.map { $0.id }
-        Putio.request(Router.cancelTransfers(ids)) { response in
-            guard let status = response.response?.statusCode, case 200 ..< 300 = status else {
+        Putio.request(Router.cancelTransfers(ids)) { json, error in
+            guard error == nil else {
                 completionHandler(false)
                 return
             }
