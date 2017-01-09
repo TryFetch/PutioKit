@@ -180,4 +180,21 @@ extension Putio {
         }
     }
     
+    /// Create a new folder
+    ///
+    /// - Parameters:
+    ///   - folder: The name of the folder to create.
+    ///   - parent: The ID of the parent directory it should be placed in. This defaults to the root directory (0).
+    ///   - completionHandler: The response handler
+    public class func create(folder: String, parent: Int = 0, completionHandler: @escaping (Bool) -> Void) {
+        Putio.request(Router.createFolder(folder, parent)) { json, error in
+            guard error == nil else {
+                completionHandler(false)
+                return
+            }
+            
+            completionHandler(true)
+        }
+    }
+    
 }

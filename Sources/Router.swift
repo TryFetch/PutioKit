@@ -20,6 +20,7 @@ enum Router: URLRequestConvertible {
     case renameFile(Int, String)
     case file(Int)
     case moveFiles([Int], Int)
+    case createFolder(String, Int)
     
     case transfers
     case cleanTransfers
@@ -40,7 +41,9 @@ enum Router: URLRequestConvertible {
             return (.post, "/files/rename", ["file_id": id, "name": name])
         case .moveFiles(let files, let parent):
             return (.post, "/files/move", ["file_ids": files.map { String($0) }.joined(separator: ","), "parent": parent])
-    
+        case .createFolder(let name, let parent):
+            return (.post, "/files/create-folder", ["name": name, "parent_id": parent])
+            
         case .transfers:
             return (.get, "/transfers/list", [:])
         case .cleanTransfers:
