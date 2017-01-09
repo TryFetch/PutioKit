@@ -113,7 +113,6 @@ public final class Transfer {
     internal convenience init(json: [String:Any]) {
         self.init()
         
-        
         uploaded = (json["uploaded"] as? Int) ?? 0
         estimatedTime = (json["estimated_time"] as? Int) ?? 0
         peersGettingFromUs = (json["peers_getting_from_us"] as? Int) ?? 0

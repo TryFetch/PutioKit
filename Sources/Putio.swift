@@ -11,10 +11,10 @@ import Alamofire
 public final class Putio {
 
     /// The client ID used for OAuth Authentication
-    static var clientId: Int?
+    public static var clientId: Int?
 
     /// The client ID secret used for OAuth Authentication
-    static var secret: String?
+    public static var secret: String?
 
     /// The access token used by the user to authorise requests
     public static var accessToken: String?
