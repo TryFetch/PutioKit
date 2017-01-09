@@ -16,3 +16,31 @@ Putio.clientId = 1234 // The client ID given when registering an app with Put.io
 Putio.secret = "xxxxxxxxxxxxxxxxxxxx" // The client secret obtained when registering an app with Put.io
 Putio.accessToken = "ABC123DE" // The user's access token obtained from OAuth
 ```
+
+The main methods for interacting with the API are all included on the `Putio` class. Some model specific methods will be included elsewhere. For example there is a method for retrying a transfer on the `Transfer` object itself.
+
+Some examples of methods and their usage can be seen below.
+
+```swift
+import PutioKit
+
+// FILES
+
+Putio.getFiles { files in
+  print(files)
+}
+
+Putio.delete(files: [file1, file2]) { completed in
+  print(completed)
+}
+
+// TRANSFERS
+
+Putio.getTransfers { transfers in
+  print(transfers)
+}
+
+Putio.cleanTransfers { completed in
+  print(completed)
+}      
+```
