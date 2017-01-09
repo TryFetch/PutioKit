@@ -93,7 +93,7 @@ extension File {
     ///   - name: The new name of the file
     ///   - completionHandler: The response handler
     public func rename(name: String, completionHandler: @escaping (Bool) -> Void) {
-        Putio.request(Router.renameFile(id, name)) { json, error in
+        Putio.request(Router.renameFile(id, name)) { response, error in
             guard error == nil else {
                 completionHandler(false)
                 return
@@ -108,13 +108,13 @@ extension File {
     ///
     /// - Parameter completionHandler: The response handler
     public func getProgress(completionHandler: @escaping (Int) -> Void) {
-        Putio.request(Router.file(id)) { json, error in
+        Putio.request(Router.file(id)) { response, error in
             guard error == nil else {
                 completionHandler(0)
                 return
             }
             
-            guard let dict = json, let file = dict["file"] as? [String:Any] else {
+            guard let dict = response as? [String:Any], let file = dict["file"] as? [String:Any] else {
                 completionHandler(0)
                 return
             }
@@ -127,7 +127,7 @@ extension File {
     ///
     /// - Parameter completionHandler: The response handler
     public func convertToMp4(completionHandler: @escaping (Bool) -> Void) {
-        Putio.request(Router.convertToMp4(id)) { json, error in
+        Putio.request(Router.convertToMp4(id)) { response, error in
             guard error == nil else {
                 completionHandler(false)
                 return
@@ -149,8 +149,8 @@ extension Putio {
     ///   - fromParent: The parent to retreive files from. By default this is 0 meaning the root directory.
     ///   - completionHandler: The response handler
     public class func getFiles(fromParent: Int = 0, completionHandler: @escaping ([File], Error?) -> Void) {
-        Putio.request(Router.files(fromParent)) { json, error in
-            guard let json = json, let files = json["files"] as? [[String:Any]] else {
+        Putio.request(Router.files(fromParent)) { response, error in
+            guard let json = response as? [String:Any], let files = json["files"] as? [[String:Any]] else {
                 completionHandler([], error)
                 return
             }
@@ -166,7 +166,7 @@ extension Putio {
     ///   - completionHandler: The response handler
     public class func delete(files: [File], completionHandler: @escaping (Bool) -> Void) {
         let ids = files.map { $0.id }
-        Putio.request(Router.deleteFiles(ids)) { json, error in
+        Putio.request(Router.deleteFiles(ids)) { response, error in
             guard error == nil else {
                 completionHandler(false)
                 return
@@ -184,7 +184,7 @@ extension Putio {
     ///   - completionHandler: The response handler
     public class func move(files: [File], to: Int, completionHandler: @escaping (Bool) -> Void) {
         let ids = files.map { $0.id }
-        Putio.request(Router.moveFiles(ids, to)) { json, error in
+        Putio.request(Router.moveFiles(ids, to)) { response, error in
             guard error == nil else {
                 completionHandler(false)
                 return
@@ -201,7 +201,7 @@ extension Putio {
     ///   - parent: The ID of the parent directory it should be placed in. This defaults to the root directory (0).
     ///   - completionHandler: The response handler
     public class func create(folder: String, parent: Int = 0, completionHandler: @escaping (Bool) -> Void) {
-        Putio.request(Router.createFolder(folder, parent)) { json, error in
+        Putio.request(Router.createFolder(folder, parent)) { response, error in
             guard error == nil else {
                 completionHandler(false)
                 return

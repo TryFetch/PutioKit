@@ -178,8 +178,8 @@ extension Putio {
     ///
     /// - Parameter completionHandler: The response handler
     public class func getTransfers(completionHandler: @escaping ([Transfer], Error?) -> Void) {
-        Putio.request(Router.transfers) { json, error in
-            guard let json = json, let transfers = json["transfers"] as? [[String:Any]] else {
+        Putio.request(Router.transfers) { response, error in
+            guard let json = response as? [String:Any], let transfers = json["transfers"] as? [[String:Any]] else {
                 completionHandler([], error)
                 return
             }
@@ -197,7 +197,7 @@ extension Putio {
     ///   - completionHandler: The response handler
     public class func addTransfer(fromUrl url: String, parent: Int = 0, extract: Bool = false, completionHandler: @escaping (Transfer?, Error?) -> Void) {
         Putio.request(Router.addTransfer(url, parent, extract)) { json, error in
-            guard let json = json else {
+            guard let json = json as? [String:Any] else {
                 completionHandler(nil, error)
                 return
             }
