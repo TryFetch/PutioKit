@@ -26,8 +26,9 @@ import PutioKit
 
 // FILES
 
-Putio.getFiles { files in
+Putio.getFiles { files, error in
   print(files)
+  print(error)
 }
 
 Putio.delete(files: [file1, file2]) { completed in
@@ -36,8 +37,9 @@ Putio.delete(files: [file1, file2]) { completed in
 
 // TRANSFERS
 
-Putio.getTransfers { transfers in
+Putio.getTransfers { transfers, error in
   print(transfers)
+  print(error)
 }
 
 Putio.cleanTransfers { completed in
