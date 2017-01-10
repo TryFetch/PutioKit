@@ -173,9 +173,99 @@ class TransferTests: XCTestCase {
     
     func testCleanTransfers() {
         
+        MockRequest.shared.statusCode = 200
+        MockRequest.shared.value = "Success"
+
+        let expect = expectation(description: "Successful response")
+        
+        Putio.cleanTransfers { completed in
+            XCTAssertTrue(completed)
+            expect.fulfill()
+        }
+        
+        let expect2 = expectation(description: "Fail response")
+        
+        MockRequest.shared.statusCode = 500
+        MockRequest.shared.value = ""
+        
+        Putio.cleanTransfers { completed in
+            XCTAssertFalse(completed)
+            expect2.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("wait for expectations \(error)")
+            }
+        }
+        
+    }
+    
+    func testCancelTransfers() {
+        
+        let transfer = Transfer(json: data)
+        
+        MockRequest.shared.statusCode = 200
+        MockRequest.shared.value = "Success"
+        
+        let expect = expectation(description: "Successful response")
+        
+        Putio.cancel(transfers: [transfer]) { completed in
+            XCTAssertTrue(completed)
+            expect.fulfill()
+        }
+        
+        MockRequest.shared.statusCode = 500
+        MockRequest.shared.value = "Fail"
+        
+        let expect2 = expectation(description: "Fail response")
+        
+        Putio.cancel(transfers: [transfer]) { completed in
+            XCTAssertFalse(completed)
+            expect2.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("wait for expectations \(error)")
+            }
+        }
+        
     }
     
     
     // MARK: - Model Methods
 
+    func testRetryTransfer() {
+        
+        let transfer = Transfer(json: data)
+        
+        MockRequest.shared.statusCode = 200
+        MockRequest.shared.value = "Success"
+        
+        let expect = expectation(description: "Successful response")
+        
+        transfer.retry { completed in
+            XCTAssertTrue(completed)
+            expect.fulfill()
+        }
+        
+        MockRequest.shared.statusCode = 500
+        MockRequest.shared.value = "Fail"
+        
+        let expect2 = expectation(description: "Fail response")
+        
+        transfer.retry { completed in
+            XCTAssertFalse(completed)
+            expect2.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("wait for expectations \(error)")
+            }
+        }
+        
+    }
+    
 }

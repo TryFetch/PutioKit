@@ -236,7 +236,7 @@ extension Putio {
     /// - Parameters:
     ///   - transfers: The transfers to cancel
     ///   - completionHandler: The response handler
-    public func cancel(transfers: [Transfer], completionHandler: @escaping (Bool) -> Void) {
+    public class func cancel(transfers: [Transfer], completionHandler: @escaping (Bool) -> Void) {
         let ids = transfers.map { $0.id }
         Putio.request(Router.cancelTransfers(ids)) { json, error in
             guard error == nil else {
