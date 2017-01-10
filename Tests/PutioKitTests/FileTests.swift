@@ -349,5 +349,35 @@ class FileTests: XCTestCase {
         }
     }
     
+    func testGetSharedWith() {
+        
+        let file = File(json: data)
+        
+        MockRequest.shared.statusCode = 200
+        MockRequest.shared.value = [
+            "shared-with": [
+                [
+                    "user_name": "John Doe",
+                    "user_avatar_url": "https://gravatar.com/avatars/johndoe.png",
+                    "share_id": 3913572317
+                ]
+            ]
+        ]
+        
+        let expect = expectation(description: "A successful response")
+        
+        file.getSharedWith { friends, error in
+            XCTAssertNil(error)
+            XCTAssertNotNil(friends.first)
+            expect.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+        
+    }
     
 }

@@ -200,6 +200,25 @@ extension File {
     public func move(to: Int, completionHandler: @escaping (Bool) -> Void) {
         Putio.move(files: [self], to: to, completionHandler: completionHandler)
     }
+    
+    /// Get the friends that a file has been shared with
+    ///
+    /// - Parameter completionHandler: The response handler
+    public func getSharedWith(completionHandler: @escaping ([Friend], Error?) -> Void) {
+        Putio.request(Router.getSharedWith(id)) { response, error in
+            if let error = error {
+                completionHandler([], error)
+                return
+            }
+            
+            guard let json = response as? [String:Any], let friends = json["shared-with"] as? [[String:Any]] else {
+                completionHandler([], PutioError.couldNotParseJSON)
+                return
+            }
+            
+            completionHandler(friends.flatMap(Friend.init), error)
+        }
+    }
 
 }
 
