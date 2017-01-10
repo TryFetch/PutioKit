@@ -255,4 +255,22 @@ extension Putio {
         }
     }
     
+    /// Share files with other users on Put.io
+    ///
+    /// - Parameters:
+    ///   - files: The files to share
+    ///   - with: The usernames to share files with
+    ///   - completionHandler: The response handler
+    public class func share(files: [File], with friends: [String], completionHandler: @escaping (Bool) -> Void) {
+        let ids = files.map { $0.id }
+        Putio.request(Router.shareFiles(ids, friends)) { response, error in
+            guard error == nil else {
+                completionHandler(false)
+                return
+            }
+            
+            completionHandler(true)
+        }
+    }
+    
 }

@@ -23,6 +23,7 @@ enum Router: URLRequestConvertible {
     case createFolder(String, Int)
     case convertToMp4(Int)
     case getMp4Status(Int)
+    case shareFiles([Int], [String])
     
     case transfers
     case cleanTransfers
@@ -49,6 +50,8 @@ enum Router: URLRequestConvertible {
             return (.post, "/files/\(id)/mp4", [:])
         case .getMp4Status(let id):
             return (.get, "/files/\(id)/mp4", [:])
+        case .shareFiles(let files, let friends):
+            return (.post, "/files/share", ["file_ids": files.map { String($0) }.joined(separator: ","), "friends": friends.joined(separator: ",")])
             
         case .transfers:
             return (.get, "/transfers/list", [:])

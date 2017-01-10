@@ -172,6 +172,39 @@ class FileTests: XCTestCase {
         
     }
     
+    func testShareFiles() {
+        
+        MockRequest.shared.value = ["status": "OK"]
+        MockRequest.shared.statusCode = 200
+       
+        let file = File(json: data)
+        
+        let expect = expectation(description: "Response will be okay")
+        
+        Putio.share(files: [file], with: ["steve", "kyle"]) { completed in
+            XCTAssertTrue(completed)
+            
+            expect.fulfill()
+        }
+        
+        MockRequest.shared.statusCode = 500
+        
+        let expect2 = expectation(description: "Response will be bad")
+        
+        Putio.share(files: [file], with: ["steve", "kyle"]) { completed in
+            XCTAssertFalse(completed)
+            
+            expect2.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+        
+    }
+    
     
     // MARK: - Model Methods
     
@@ -285,11 +318,26 @@ class FileTests: XCTestCase {
             expect.fulfill()
         }
         
+        MockRequest.shared.statusCode = 200
+        MockRequest.shared.value = [
+            "mp4": [:]
+        ]
+        
+        let expect2 = expectation(description: "Response will be unknown")
+        
+        file.getMp4Status { status, percentage in
+            XCTAssertEqual(status, MP4Status.unknown)
+            XCTAssertEqual(percentage, 0)
+            
+            expect2.fulfill()
+        }
+        
         waitForExpectations(timeout: 1) { error in
             if let error = error {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
         }
     }
+    
     
 }
