@@ -176,6 +176,30 @@ extension File {
         }
     }
     
+    /// Share the file with friends
+    ///
+    /// - Parameters:
+    ///   - friends: Array of friend usernames
+    ///   - completionHandler: The response handler
+    public func share(with friends: [String], completionHandler: @escaping (Bool) -> Void) {
+        Putio.share(files: [self], with: friends, completionHandler: completionHandler)
+    }
+    
+    /// Delete the current file
+    ///
+    /// - Parameter completionHandler: The response handler
+    public func delete(completionHandler: @escaping (Bool) -> Void) {
+        Putio.delete(files: [self], completionHandler: completionHandler)
+    }
+    
+    /// Move the current file to a new parent folder
+    ///
+    /// - Parameters:
+    ///   - to: ID of the new parent directory
+    ///   - completionHandler: The response handler
+    public func move(to: Int, completionHandler: @escaping (Bool) -> Void) {
+        Putio.move(files: [self], to: to, completionHandler: completionHandler)
+    }
 
 }
 
