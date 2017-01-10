@@ -45,6 +45,16 @@ class FileTests: XCTestCase {
         XCTAssertEqual(file.screenshot, "http://example.com/screenshot.png")
     }
     
+    func testHlsPlaylist() {
+        
+        let file = File(json: data)
+        XCTAssertNil(file.hlsPlaylist)
+        
+        Putio.accessToken = "abc123"
+        
+        XCTAssertEqual(file.hlsPlaylist, "https://api.put.io/v2/files/1234/hls/media.m3u8?oauth_token=abc123&subtitle_key=all")
+    }
+    
     // MARK: - Global Methods
     
     func testGetFiles() {
