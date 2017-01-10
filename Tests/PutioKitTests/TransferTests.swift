@@ -11,32 +11,40 @@ import XCTest
 
 class TransferTests: XCTestCase {
     
+    override func setUp() {
+        super.setUp()
+        
+        Putio.testing = true
+    }
+    
+    let data: [String:Any] = [
+        "uploaded": 1234,
+        "estimated_time": 2345,
+        "peers_getting_from_us": 5,
+        "extract": true,
+        "currentRatio": 1.2,
+        "size": 2345876,
+        "up_speed": 352,
+        "id": 9284,
+        "source": "http://google.com",
+        "subscription_id": 12,
+        "status_message": "Can anyone hear me?",
+        "status": "COMPLETED",
+        "down_speed": 8288,
+        "peers_connected": 29,
+        "downloaded": 234,
+        "file_id": 11234,
+        "peers_sending_to_us": 1,
+        "percent_complete": 12,
+        "tracker_message": "A lovely message",
+        "name": "1337hax.exe",
+        "created_at": "2017-01-04 10:10:23",
+        "error_message": "Unlikely to happen",
+        "parent_id": 13
+    ]
+    
     func testJSONInitializer() {
-        let transfer = Transfer(json: [
-            "uploaded": 1234,
-            "estimated_time": 2345,
-            "peers_getting_from_us": 5,
-            "extract": true,
-            "currentRatio": 1.2,
-            "size": 2345876,
-            "up_speed": 352,
-            "id": 9284,
-            "source": "http://google.com",
-            "subscription_id": 12,
-            "status_message": "Can anyone hear me?",
-            "status": "COMPLETED",
-            "down_speed": 8288,
-            "peers_connected": 29,
-            "downloaded": 234,
-            "file_id": 11234,
-            "peers_sending_to_us": 1,
-            "percent_complete": 12,
-            "tracker_message": "A lovely message",
-            "name": "1337hax.exe",
-            "created_at": "2017-01-04 10:10:23",
-            "error_message": "Unlikely to happen",
-            "parent_id": 13
-        ])
+        let transfer = Transfer(json: data)
         
         XCTAssertEqual(transfer.uploaded, 1234)
         XCTAssertEqual(transfer.estimatedTime, 2345)
@@ -62,5 +70,68 @@ class TransferTests: XCTestCase {
         XCTAssertEqual(transfer.errorMessage, "Unlikely to happen")
         XCTAssertEqual(transfer.parentID, 13)
     }
+
+
+    // MARK: - Global Methods
     
+    
+    func testGetTransfers() {
+        
+        MockRequest.shared.statusCode = 200
+        MockRequest.shared.value = [
+            "transfers": [data]
+        ]
+        
+        let expect = expectation(description: "Array of transfers is returned")
+        
+        Putio.getTransfers { transfers, error in
+            
+            XCTAssertNotNil(transfers)
+            XCTAssertNil(error)
+            
+            expect.fulfill()
+        }
+        
+        MockRequest.shared.statusCode = 401
+        MockRequest.shared.value = ""
+        
+        let expect2 = expectation(description: "Error will be bad status")
+        
+        Putio.getTransfers { transfers, error in
+            XCTAssertNotNil(error)
+            expect2.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("wait for expectations \(error)")
+            }
+        }
+        
+    }
+    
+    func testAddTransfer() {
+     
+        MockRequest.shared.statusCode = 200
+        MockRequest.shared.value = data
+        
+        let expect = expectation(description: "A transfer to be returned")
+        
+        Putio.addTransfer(fromUrl: "http://google.com") { transfer, error in
+            XCTAssertNotNil(transfer)
+            XCTAssertNil(error)
+            expect.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("wait for expectations \(error)")
+            }
+        }
+        
+    }
+    
+    
+    // MARK: - Model Methods
+
 }

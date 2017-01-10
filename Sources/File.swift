@@ -150,8 +150,13 @@ extension Putio {
     ///   - completionHandler: The response handler
     public class func getFiles(fromParent: Int = 0, completionHandler: @escaping ([File], Error?) -> Void) {
         Putio.request(Router.files(fromParent)) { response, error in
-            guard let json = response as? [String:Any], let files = json["files"] as? [[String:Any]] else {
+            if let error = error {
                 completionHandler([], error)
+                return
+            }
+            
+            guard let json = response as? [String:Any], let files = json["files"] as? [[String:Any]] else {
+                completionHandler([], PutioError.couldNotParseJSON)
                 return
             }
             
