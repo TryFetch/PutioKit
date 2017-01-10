@@ -380,4 +380,41 @@ class FileTests: XCTestCase {
         
     }
     
+    func testUnshareFile() {
+        
+        let file = File(json: data)
+        let friend = Friend(json: [
+            "user_name": "John Doe",
+            "user_avatar_url": "https://gravatar.com/avatars/johndoe.png",
+            "share_id": 3913572317
+        ])
+        
+        MockRequest.shared.statusCode = 200
+        MockRequest.shared.value = ["status": "OK"]
+        
+        let expect = expectation(description: "A successful response")
+        
+        file.unshare(with: [friend]) { completed in
+            XCTAssertTrue(completed)
+            expect.fulfill()
+        }
+        
+        MockRequest.shared.statusCode = 401
+        MockRequest.shared.value = ["status": "FAIL"]
+        
+        let expect2 = expectation(description: "A fail response")
+        
+        file.unshare(with: [friend]) { completed in
+            XCTAssertFalse(completed)
+            expect2.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+        
+    }
+    
 }

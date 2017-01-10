@@ -185,6 +185,23 @@ extension File {
         Putio.share(files: [self], with: friends, completionHandler: completionHandler)
     }
     
+    /// Unshare the file with the selected friends
+    ///
+    /// - Parameters:
+    ///   - with: Array of friends
+    ///   - completionHandler: The response handler
+    public func unshare(with friends: [Friend], completionHandler: @escaping (Bool) -> Void) {
+        let ids = friends.map { $0.shareId }
+        Putio.request(Router.unshareFile(id, ids)) { response, error in
+            guard error == nil else {
+                completionHandler(false)
+                return
+            }
+            
+            completionHandler(true)
+        }
+    }
+    
     /// Delete the current file
     ///
     /// - Parameter completionHandler: The response handler
