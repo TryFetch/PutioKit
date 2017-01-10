@@ -167,6 +167,13 @@ extension Transfer {
         }
     }
     
+    /// Cancel the current transfer
+    ///
+    /// - Parameter completionHandler: The response handler
+    public func cancel(completionHandler: @escaping (Bool) -> Void) {
+        Putio.cancel(transfers: [self], completionHandler: completionHandler)
+    }
+    
 }
 
 
