@@ -137,6 +137,9 @@ extension File {
         }
     }
     
+    /// Get the current MP4 status for a file.
+    ///
+    /// - Parameter completionHandler: The response handler
     public func getMp4Status(completionHandler: @escaping (MP4Status, Int) -> Void) {
         Putio.request(Router.getMp4Status(id)) { response, error in
             guard error == nil else {
