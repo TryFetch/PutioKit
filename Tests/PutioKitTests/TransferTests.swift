@@ -93,13 +93,28 @@ class TransferTests: XCTestCase {
         }
         
         MockRequest.shared.statusCode = 401
-        MockRequest.shared.value = ""
+        MockRequest.shared.value = [
+            "transfers": [data]
+        ]
         
         let expect2 = expectation(description: "Error will be bad status")
         
         Putio.getTransfers { transfers, error in
             XCTAssertNotNil(error)
+            XCTAssertTrue(error as! PutioError == PutioError.invalidStatusCode, "Invalid status code")
             expect2.fulfill()
+        }
+        
+        MockRequest.shared.statusCode = 200
+        MockRequest.shared.value = ""
+        
+        let expect3 = expectation(description: "JSON parse error will be returned")
+        
+        Putio.getTransfers { transfers, error in
+            XCTAssertNotNil(error)
+            XCTAssertTrue(error as! PutioError == PutioError.couldNotParseJSON, "Could not parse JSON")
+            
+            expect3.fulfill()
         }
         
         waitForExpectations(timeout: 1) { error in
@@ -123,11 +138,40 @@ class TransferTests: XCTestCase {
             expect.fulfill()
         }
         
+        MockRequest.shared.statusCode = 401
+        MockRequest.shared.value = data
+        
+        let expect2 = expectation(description: "Bad status error")
+        
+        Putio.addTransfer(fromUrl: "http://google.com") { transfer, error in
+            XCTAssertNotNil(error)
+            XCTAssertTrue(error as! PutioError == PutioError.invalidStatusCode, "Invalid status code")
+            
+            expect2.fulfill()
+        }
+        
+        MockRequest.shared.statusCode = 200
+        MockRequest.shared.value = ""
+        
+        let expect3 = expectation(description: "JSON parse error")
+        
+        Putio.addTransfer(fromUrl: "http://google.com") { transfer, error in
+            XCTAssertNotNil(error)
+            XCTAssertTrue(error as! PutioError == PutioError.couldNotParseJSON, "Invalid status code")
+            
+            expect3.fulfill()
+        }
+        
+        
         waitForExpectations(timeout: 1) { error in
             if let error = error {
                 XCTFail("wait for expectations \(error)")
             }
         }
+        
+    }
+    
+    func testCleanTransfers() {
         
     }
     
