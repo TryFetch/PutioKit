@@ -45,6 +45,8 @@ class FileTests: XCTestCase {
         XCTAssertEqual(file.screenshot, "http://example.com/screenshot.png")
     }
     
+    // MARK: - Global Methods
+    
     func testGetFiles() {
         
         MockRequest.shared.statusCode = 200
@@ -73,6 +75,101 @@ class FileTests: XCTestCase {
         
     }
     
+    func testDelete() {
+        
+        let file = File(json: data)
+        
+        MockRequest.shared.value = "Success"
+        
+        let expect = expectation(description: "Response will be okay")
+        
+        Putio.delete(files: [file]) { completed in
+            XCTAssertTrue(completed)
+            
+            expect.fulfill()
+        }
+        
+        MockRequest.shared.statusCode = 500
+        
+        let expect2 = expectation(description: "Response will be bad")
+        
+        Putio.delete(files: [file]) { completed in
+            XCTAssertFalse(completed)
+            
+            expect2.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+        
+    }
+    
+    func testMove() {
+        
+        let file = File(json: data)
+        
+        MockRequest.shared.value = "Success"
+        
+        let expect = expectation(description: "Response will be okay")
+        
+        Putio.move(files: [file], to: 123) { completed in
+            XCTAssertTrue(completed)
+            
+            expect.fulfill()
+        }
+        
+        MockRequest.shared.statusCode = 500
+        
+        let expect2 = expectation(description: "Response will be bad")
+        
+        Putio.move(files: [file], to: 123) { completed in
+            XCTAssertFalse(completed)
+            
+            expect2.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+        
+    }
+    
+    func testCreate() {
+        
+        let expect = expectation(description: "Response will be okay")
+        
+        Putio.create(folder: "New Folder") { completed in
+            XCTAssertTrue(completed)
+            
+            expect.fulfill()
+        }
+        
+        MockRequest.shared.statusCode = 500
+        
+        let expect2 = expectation(description: "Response will be bad")
+        
+        Putio.create(folder: "New Folder") { completed in
+            XCTAssertFalse(completed)
+            
+            expect2.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+        
+    }
+    
+    
+    // MARK: - Model Methods
+    
     func testRename() {
         
         let file = File(json: data)
@@ -92,6 +189,63 @@ class FileTests: XCTestCase {
         let expect2 = expectation(description: "Response will be bad")
         
         file.rename(name: "Hellow world") { completed in
+            XCTAssertFalse(completed)
+            
+            expect2.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+        
+    }
+    
+    func testGetProgress() {
+        
+        let file = File(json: data)
+        
+        MockRequest.shared.value = [
+            "file": [
+                "start_from": 123
+            ]
+        ]
+        
+        let expect = expectation(description: "Response will return 123")
+        
+        file.getProgress { progress in
+            XCTAssertEqual(progress, 123)
+            expect.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+        
+    }
+    
+    func testConvertToMp4() {
+    
+        let file = File(json: data)
+        
+        MockRequest.shared.value = "Success"
+        
+        let expect = expectation(description: "Response will be okay")
+        
+        file.convertToMp4 { completed in
+            XCTAssertTrue(completed)
+            
+            expect.fulfill()
+        }
+        
+        MockRequest.shared.statusCode = 500
+        
+        let expect2 = expectation(description: "Response will be bad")
+        
+        file.convertToMp4 { completed in
             XCTAssertFalse(completed)
             
             expect2.fulfill()
