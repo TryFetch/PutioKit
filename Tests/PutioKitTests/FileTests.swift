@@ -80,6 +80,7 @@ class FileTests: XCTestCase {
         let file = File(json: data)
         
         MockRequest.shared.value = "Success"
+        MockRequest.shared.statusCode = 200
         
         let expect = expectation(description: "Response will be okay")
         
@@ -112,6 +113,7 @@ class FileTests: XCTestCase {
         let file = File(json: data)
         
         MockRequest.shared.value = "Success"
+        MockRequest.shared.statusCode = 200
         
         let expect = expectation(description: "Response will be okay")
         
@@ -140,6 +142,9 @@ class FileTests: XCTestCase {
     }
     
     func testCreate() {
+        
+        MockRequest.shared.value = "Success"
+        MockRequest.shared.statusCode = 200
         
         let expect = expectation(description: "Response will be okay")
         
@@ -175,6 +180,7 @@ class FileTests: XCTestCase {
         let file = File(json: data)
         
         MockRequest.shared.value = "Success"
+        MockRequest.shared.statusCode = 200
         
         let expect = expectation(description: "Response will be okay")
         
