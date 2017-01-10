@@ -10,8 +10,13 @@ import Foundation
 
 public enum PutioError: Error {
 
+    /// There was an error parsing the JSON from the API
     case couldNotParseJSON
+    
+    /// An access token was not provided so this endpoint could not be called
     case noAccessToken
+    
+    /// The expected status code was not returned
     case invalidStatusCode
     
 }

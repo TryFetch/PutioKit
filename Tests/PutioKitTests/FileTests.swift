@@ -265,4 +265,31 @@ class FileTests: XCTestCase {
         
     }
     
+    func testGetMp4Status() {
+        let file = File(json: data)
+        
+        MockRequest.shared.statusCode = 200
+        MockRequest.shared.value = [
+            "mp4": [
+                "status": "PREPARING",
+                "percent_done": 22
+            ]
+        ]
+        
+        let expect = expectation(description: "Response will be successful")
+        
+        file.getMp4Status { status, percentage in
+            XCTAssertEqual(status, MP4Status.preparing)
+            XCTAssertEqual(percentage, 22)
+            
+            expect.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+    }
+    
 }

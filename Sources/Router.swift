@@ -22,6 +22,7 @@ enum Router: URLRequestConvertible {
     case moveFiles([Int], Int)
     case createFolder(String, Int)
     case convertToMp4(Int)
+    case getMp4Status(Int)
     
     case transfers
     case cleanTransfers
@@ -46,6 +47,8 @@ enum Router: URLRequestConvertible {
             return (.post, "/files/create-folder", ["name": name, "parent_id": parent])
         case .convertToMp4(let id):
             return (.post, "/files/\(id)/mp4", [:])
+        case .getMp4Status(let id):
+            return (.get, "/files/\(id)/mp4", [:])
             
         case .transfers:
             return (.get, "/transfers/list", [:])

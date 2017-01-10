@@ -136,6 +136,42 @@ extension File {
             completionHandler(true)
         }
     }
+    
+    public func getMp4Status(completionHandler: @escaping (MP4Status, Int) -> Void) {
+        Putio.request(Router.getMp4Status(id)) { response, error in
+            guard error == nil else {
+                completionHandler(.unknown, 0)
+                return
+            }
+            
+            guard let json = response as? [String:Any], let mp4 = json["mp4"] as? [String:Any], let status = mp4["status"] as? String else {
+                completionHandler(.unknown, 0)
+                return
+            }
+            
+            let statusType: MP4Status = {
+                switch status {
+                case "NOT_AVAILABLE":
+                    return .unavailable
+                case "IN_QUEUE":
+                    return .queued
+                case "PREPARING":
+                    return .preparing
+                case "CONVERTING":
+                    return .converting
+                case "FINISHING":
+                    return .finishing
+                case "COMPLETED":
+                    return .completed
+                default:
+                    return .unknown
+                }
+            }()
+            
+            completionHandler(statusType, mp4["percent_done"] as? Int ?? 0)
+            
+        }
+    }
 
 }
 
