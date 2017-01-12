@@ -8,6 +8,16 @@
 
 import Foundation
 
+public enum SubtitleFormat: String {
+    
+    /// The default subtitle format used by Put.io.
+    case srt = "srt"
+    
+    /// An alternative format available if required. Things like Chromecast require WebVTT.
+    case webvtt = "webvtt"
+    
+}
+
 public enum SubtitleSource {
     
     /// An SRT file with an identical name as the video
@@ -32,18 +42,22 @@ public class Subtitle: NSObject {
     /// The name of the file e.g MySubtitle.srt
     public var name = ""
     
+    /// The ID of the file this subtitle is associated with
+    public var fileId = 0
+    
     /// Where the subtitle was obtained from
     public var source: SubtitleSource = .folder
     
-    internal convenience init(json: [String:Any]) {
+    internal convenience init(json: [String:Any], id: Int) {
         self.init()
         
-        self.key = json["key"] as? String ?? ""
-        self.language = json["language"] as? String
-        self.name = json["name"] as? String ?? "Unknown"
+        key = json["key"] as? String ?? ""
+        language = json["language"] as? String
+        name = json["name"] as? String ?? "Unknown"
+        fileId = id
         
         if let text = json["source"] as? String {
-            self.source = {
+            source = {
                 switch text {
                 case "folder":
                     return .folder
@@ -59,6 +73,13 @@ public class Subtitle: NSObject {
         
     }
     
-    
+    /// Generate the URL for the requested format
+    ///
+    /// - Parameter format: The format to request. Defaults to `.srt`
+    /// - Returns: The generated URL
+    public func url(forFormat format: SubtitleFormat = .srt) -> URL? {
+        let urlString = Router.base + "/files/\(fileId)/subtitles/\(key)?format=" + format.rawValue
+        return URL(string: urlString)
+    }
     
 }

@@ -86,7 +86,6 @@ public final class File: NSObject {
 
 extension File {
 
-    
     /// Rename the selected file
     ///
     /// - Parameters:
@@ -102,7 +101,6 @@ extension File {
             completionHandler(true)
         }
     }
-
     
     /// Get the current progress of the file
     ///
@@ -253,7 +251,10 @@ extension File {
                 return
             }
             
-            let mapped = subtitles.flatMap(Subtitle.init)
+            let mapped = subtitles.flatMap { [unowned self] subtitle in
+                return (subtitle, self.id)
+            }.flatMap(Subtitle.init)
+            
             let defaultST = mapped.filter { $0.key == defaultKey }.first
             
             completionHandler(mapped, defaultST, error)
