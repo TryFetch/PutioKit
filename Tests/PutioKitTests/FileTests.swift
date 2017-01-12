@@ -417,4 +417,54 @@ class FileTests: XCTestCase {
         
     }
     
+    func testGetSubtitles() {
+        
+        MockRequest.shared.statusCode = 200
+        MockRequest.shared.value = [
+            "default": "V7mVadfvq34erarjy9tqj0435hgare",
+            "status": "OK",
+            "subtitles": [
+                [
+                    "key": "V7mVafQ73r9902cjgbdfkvj2094css",
+                    "language": "English",
+                    "name": "MySubtitle2.srt",
+                    "source": "mkv"
+                ],
+                [
+                    "key": "V7mVadfvq34erarjy9tqj0435hgare",
+                    "language": nil,
+                    "name": "MySubtitle1.srt",
+                    "source": "folder"
+                ],
+                [
+                    "key": "V7mVafQ7LC_B7FKcG3pELfos2URzh8I",
+                    "language": "English",
+                    "name": "MySubtitle3.srt",
+                    "source": "opensubtitles"
+                ]
+            ]
+        ]
+        
+        let expect = expectation(description: "A successful response")
+        
+        let file = File(json: data)
+        
+        file.getSubtitles { subtitles, defaultSubtitle, error in
+            
+            XCTAssertNotNil(defaultSubtitle)
+            XCTAssertEqual(defaultSubtitle?.key, "V7mVadfvq34erarjy9tqj0435hgare")
+            XCTAssertEqual(subtitles.count, 3)
+            XCTAssertNil(error)
+            
+            expect.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+        
+    }
+    
 }

@@ -236,7 +236,31 @@ extension File {
             completionHandler(friends.flatMap(Friend.init), error)
         }
     }
-
+    
+    /// Get a list of subtitles relating to the file
+    ///
+    /// - Parameter completionHandler: The response handler
+    public func getSubtitles(completionHandler: @escaping ([Subtitle], Subtitle?, Error?) -> Void) {
+        
+        Putio.request(Router.getSubtitles(id)) { response, error in
+            if let error = error {
+                completionHandler([], nil, error)
+                return
+            }
+            
+            guard let json = response as? [String:Any], let subtitles = json["subtitles"] as? [[String:Any]], let defaultKey = json["default"] as? String else {
+                completionHandler([], nil, PutioError.couldNotParseJSON)
+                return
+            }
+            
+            let mapped = subtitles.flatMap(Subtitle.init)
+            let defaultST = mapped.filter { $0.key == defaultKey }.first
+            
+            completionHandler(mapped, defaultST, error)
+        }
+        
+    }
+    
 }
 
 // MARK: - Main Class Methods

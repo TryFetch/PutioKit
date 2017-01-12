@@ -26,6 +26,7 @@ enum Router: URLRequestConvertible {
     case shareFiles([Int], [String])
     case getSharedWith(Int)
     case unshareFile(Int, [Int])
+    case getSubtitles(Int)
     
     case transfers
     case cleanTransfers
@@ -58,7 +59,9 @@ enum Router: URLRequestConvertible {
             return (.get, "/files/\(id)/shared-with", [:])
         case .unshareFile(let id, let friends):
             return (.post, "/files/\(id)/unshare", ["shares": friends.map { String($0) }.joined(separator: ",")])
-            
+        case .getSubtitles(let id):
+            return (.get, "/files/\(id)/subtitles", [:])
+        
         case .transfers:
             return (.get, "/transfers/list", [:])
         case .cleanTransfers:
