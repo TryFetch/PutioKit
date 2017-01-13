@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 /// This class is only used internally for testing.
-internal class MockRequest {
+internal final class MockRequest {
 
     var value: Any = []
     var statusCode = 200

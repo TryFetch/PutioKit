@@ -41,7 +41,7 @@ public enum SubtitleSource {
 }
 
 /// Represents a subtitle relating to a specific file.
-public class Subtitle: NSObject {
+open class Subtitle: NSObject {
     
     /// The unique key for the subtitle
     public var key = ""

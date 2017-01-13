@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 /// Represents a file on Put.io
-public final class File: NSObject {
+open class File: NSObject {
     
     /// The file ID
     public dynamic var id: Int = 0

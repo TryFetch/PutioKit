@@ -31,7 +31,7 @@ public enum TransferStatus {
 }
 
 /// Represents a transfer on Put.io
-public final class Transfer {
+open class Transfer {
 
     /// The number of bytes uploaded
     public var uploaded = 0

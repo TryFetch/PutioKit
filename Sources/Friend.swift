@@ -9,7 +9,7 @@
 import Foundation
 
 /// Represents a friend of the logged in user.
-public final class Friend: NSObject {
+open class Friend: NSObject {
     
     /// The username of the friend
     public dynamic var username = ""
