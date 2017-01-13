@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 
+/// Represents a file on Put.io
 public final class File: NSObject {
     
     /// The file ID

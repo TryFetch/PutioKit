@@ -9,6 +9,7 @@
 import Alamofire
 import Foundation
 
+/// The main PutioKit class. Set your `clienId`, `secret`, and `accessToken` here.
 public final class Putio {
 
     /// The client ID used for OAuth Authentication

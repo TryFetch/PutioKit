@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 
+/// This class is only used internally for testing.
 internal class MockRequest {
 
     var value: Any = []

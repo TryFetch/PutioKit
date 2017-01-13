@@ -8,6 +8,10 @@
 
 import Foundation
 
+/// The file format of subtitle.
+///
+/// - srt: Default. SRT file format.
+/// - webvtt: webVTT file format used by things like Chromecast.
 public enum SubtitleFormat: String {
     
     /// The default subtitle format used by Put.io.
@@ -18,6 +22,11 @@ public enum SubtitleFormat: String {
     
 }
 
+/// Where the subtitle was obtained from
+///
+/// - folder: An SRT file with an identical name as the video
+/// - mkv: Subtitles are extracted from an MKV file
+/// - opensubtitles: The sutitles were fetched from OpenSubtitles
 public enum SubtitleSource {
     
     /// An SRT file with an identical name as the video
@@ -26,11 +35,12 @@ public enum SubtitleSource {
     /// Subtitles are extracted from an MKV file
     case mkv
     
-    /// The sutitles were fetched from
+    /// The sutitles were fetched from OpenSubtitles
     case opensubtitles
     
 }
 
+/// Represents a subtitle relating to a specific file.
 public class Subtitle: NSObject {
     
     /// The unique key for the subtitle

@@ -8,23 +8,29 @@
 
 import Alamofire
 
-/**
- The status of the transfer
-
- - downloading: The download is currently in progress
- - inQueue:     The download is queued and will be started shortly
- - completed:   The download has completed
- - cancelled:   The download was manually cancelled
- */
+/// The current status of a transfer
+///
+/// - downloading: The transfer is currently in progress
+/// - inQueue: The transfer is queued and will be started shortly
+/// - completed: The transfer has completed
+/// - cancelled: The transfer was manually cancelled
 public enum TransferStatus {
 
+    /// The transfer is currently in progress
     case downloading
+    
+    /// The transfer is queued and will be started shortly
     case inQueue
+    
+    /// The transfer has completed
     case completed
+    
+    /// The transfer was manually cancelled
     case cancelled
 
 }
 
+/// Represents a transfer on Put.io
 public final class Transfer {
 
     /// The number of bytes uploaded

@@ -9,6 +9,7 @@
 import Foundation
 import Alamofire
 
+/// The router used for requests to the API.
 enum Router: URLRequestConvertible {
     
     static let base = "https://api.put.io/v2"
