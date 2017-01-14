@@ -263,6 +263,36 @@ extension File {
         
     }
     
+    /// Set the video position
+    ///
+    /// - Parameters:
+    ///   - position: The time in seconds
+    ///   - completionHandler: The response handler
+    public func setVideo(position: Int, completionHandler: @escaping (Bool) -> Void) {
+        Putio.request(Router.setVideoPosition(id, position)) { response, error in
+            guard error == nil else {
+                completionHandler(false)
+                return
+            }
+            
+            completionHandler(true)
+        }
+    }
+    
+    /// Delete the video position
+    ///
+    /// - Parameter completionHandler: The response handler
+    public func deleteVideoPosition(completionHandler: @escaping (Bool) -> Void) {
+        Putio.request(Router.deleteVideoPosition(id)) { response, error in
+            guard error == nil else {
+                completionHandler(false)
+                return
+            }
+            
+            completionHandler(true)
+        }
+    }
+    
 }
 
 // MARK: - Main Class Methods

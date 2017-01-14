@@ -467,4 +467,66 @@ class FileTests: XCTestCase {
         
     }
     
+    func testSetVideoPosition() {
+        
+        MockRequest.shared.statusCode = 200
+        MockRequest.shared.value = ["status": "OK"]
+        
+        let expect = expectation(description: "A successful response")
+        
+        let file = File(json: data)
+        file.setVideo(position: 123) { completed in
+            XCTAssertTrue(completed)
+            expect.fulfill()
+        }
+        
+        let expect2 = expectation(description: "A failed response")
+        
+        MockRequest.shared.statusCode = 500
+        MockRequest.shared.value = ["status": "FAIL"]
+        
+        file.setVideo(position: 123) { completed in
+            XCTAssertFalse(completed)
+            expect2.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+        
+    }
+    
+    func testDeleteVideoPosition() {
+        
+        MockRequest.shared.statusCode = 200
+        MockRequest.shared.value = ["status": "OK"]
+        
+        let expect = expectation(description: "A successful response")
+        
+        let file = File(json: data)
+        file.deleteVideoPosition { completed in
+            XCTAssertTrue(completed)
+            expect.fulfill()
+        }
+        
+        let expect2 = expectation(description: "A failed response")
+        
+        MockRequest.shared.statusCode = 500
+        MockRequest.shared.value = ["status": "FAIL"]
+        
+        file.deleteVideoPosition { completed in
+            XCTAssertFalse(completed)
+            expect2.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+        
+    }
+    
 }
