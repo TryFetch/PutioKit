@@ -9,20 +9,27 @@
 import Alamofire
 import Foundation
 
-/// The main PutioKit class. Set your `clienId`, `secret`, and `accessToken` here.
+/// The main PutioKit class. Set your `clientId`, `redirectUri`, and `accessToken` here.
 public final class Putio {
 
     /// The client ID used for OAuth Authentication
     public static var clientId: Int?
 
-    /// The client ID secret used for OAuth Authentication
-    public static var secret: String?
-
     /// The access token used by the user to authorise requests
     public static var accessToken: String?
     
+    /// The redirect URI registered with Put.io
+    public static var redirectUri: String?
+    
     /// Set by unit tests
     internal static var testing = false
+    
+    /// The URL used for authentication with Put.io
+    public static var authenticationUrl: URL? {
+        guard let id = clientId, let url = redirectUri else { return nil }
+        let string = Router.base + "/oauth2/authenticate?client_id=\(id)&response_type=token&redirect_uri=\(url)"
+        return URL(string: string)
+    }
 
     /// Make an API request
     ///
