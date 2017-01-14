@@ -5,7 +5,7 @@
 
 This project is currently a work in process but aims to be a feature complete wrapper for Put.io's API. It's derived from the framework of the same name used it [Fetch](https://github.com/TryFetch/Fetch).
 
-### Usage
+## Usage
 
 In order to access the Put.io API you'll need to create an OAuth app and use its client ID and secret. The following static properties can be set on the main `Putio` class.
 
@@ -13,9 +13,15 @@ In order to access the Put.io API you'll need to create an OAuth app and use its
 import PutioKit
 
 Putio.clientId = 1234 // The client ID given when registering an app with Put.io
-Putio.secret = "xxxxxxxxxxxxxxxxxxxx" // The client secret obtained when registering an app with Put.io
+Putio.redirectUri = "http://example.com/auth" // The redirect URI registered with Put.io
 Putio.accessToken = "ABC123DE" // The user's access token obtained from OAuth
 ```
+
+### Authentication
+
+Authentication depends on whether you have a server or just want to authenticate on device. More information on these solutions can be found on [Put.io's API](https://put.io/v2/docs/gettingstarted.html#authentication-and-access).
+
+### Examples
 
 The main methods for interacting with the API are all included on the `Putio` class. Some model specific methods will be included elsewhere. For example there is a method for retrying a transfer on the `Transfer` object itself.
 
@@ -35,6 +41,10 @@ Putio.delete(files: [file1, file2]) { completed in
   print(completed)
 }
 
+file.getSubtitles { subtitles, error in
+  print(subtitles)
+}
+
 // TRANSFERS
 
 Putio.getTransfers { transfers, error in
@@ -44,5 +54,9 @@ Putio.getTransfers { transfers, error in
 
 Putio.cleanTransfers { completed in
   print(completed)
-}      
+}
+
+transfer.cancel { completed in
+  print(completed)
+}
 ```
