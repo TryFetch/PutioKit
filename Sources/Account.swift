@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Represents the authenticated account on Put.io
 open class Account: NSObject {
     
     /// The username of the authenticated account
@@ -42,8 +43,31 @@ open class Account: NSObject {
         
         if let dateString = json["plan_expiration_date"] as? String {
             let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:s"
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:s"
             planExpirationDate = formatter.date(from: dateString)
+        }
+    }
+    
+}
+
+extension Putio {
+    
+    /// Get account information from Put.io
+    ///
+    /// - Parameter completionHandler: The response handler
+    public class func getAccountInfo(completionHandler: @escaping (Account?, Error?) -> Void) {
+        Putio.request(Router.getAccountInfo) { response, error in
+            if let error = error {
+                completionHandler(nil, error)
+                return
+            }
+            
+            guard let json = response as? [String: Any], let info = json["info"] as? [String:Any] else {
+                completionHandler(nil, PutioError.couldNotParseJSON)
+                return
+            }
+            
+            completionHandler(Account(json: info), error)
         }
     }
     
