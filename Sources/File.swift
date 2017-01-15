@@ -13,40 +13,40 @@ import Alamofire
 open class File: NSObject {
     
     /// The file ID
-    public dynamic var id: Int = 0
+    open dynamic var id: Int = 0
     
     /// The display name of the file
-    public dynamic var name: String?
+    open dynamic var name: String?
     
     /// The size of the file in bytes
-    public dynamic var size: Int = 0
+    open dynamic var size: Int = 0
     
     /// The metatype of file
-    public dynamic var contentType: String?
+    open dynamic var contentType: String?
     
     /// Does the file have an MP4?
-    public dynamic var hasMP4 = false
+    open dynamic var hasMP4 = false
     
     /// The ID of the parent folder (if there is one)
-    public dynamic var parentID: Int = 0
+    open dynamic var parentID: Int = 0
     
     /// Whether the file has been access or not
-    public dynamic var accessed = false
+    open dynamic var accessed = false
     
     /// URL string of a screenshot
-    public dynamic var screenshot: String?
+    open dynamic var screenshot: String?
     
     /// Whether the file has been shared with you or if you own it
-    public dynamic var isShared = false
+    open dynamic var isShared = false
     
     /// Seconds that the file should be started from
-    public dynamic var startFrom: Float64 = 0
+    open dynamic var startFrom: Double = 0
     
     /// Reference to parent file
-    public dynamic var parent: File?
+    open dynamic var parent: File?
     
     /// The timestamp when the file was created
-    public dynamic var createdAt: String?
+    open dynamic var createdAt: String?
     
     /// Link to an HLS playlist that allows for streaming on Apple devices easily
     public var hlsPlaylist: String? {
@@ -77,8 +77,9 @@ open class File: NSObject {
         size = (json["size"] as? Int) ?? 0
         contentType = json["content_type"] as? String
         accessed = (json["first_accessed_at"] != nil)
-        createdAt = json["created_at"] as? String
+        createdAt = json["created_at"] as? String // TODO: Change this to a Date() object
         screenshot = json["screenshot"] as? String
+        startFrom = json["start_from"] as? Double ?? 0
     }
     
 }

@@ -12,13 +12,13 @@ import Foundation
 open class Friend: NSObject {
     
     /// The username of the friend
-    public dynamic var username = ""
+    open dynamic var username = ""
     
     /// URL of the user's avatar
-    public dynamic var avatar = ""
+    open dynamic var avatar = ""
     
     /// The ID that can be used for unsharing a file
-    public dynamic var shareId = 0
+    open dynamic var shareId = 0
     
     internal convenience init(json: [String:Any]) {
         self.init()

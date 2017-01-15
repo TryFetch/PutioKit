@@ -44,19 +44,19 @@ public enum SubtitleSource {
 open class Subtitle: NSObject {
     
     /// The unique key for the subtitle
-    public var key = ""
+    open dynamic var key = ""
     
     /// The detected language of the subtitle
-    public var language: String?
+    open dynamic var language: String?
     
     /// The name of the file e.g MySubtitle.srt
-    public var name = ""
+    open dynamic var name = ""
     
     /// The ID of the file this subtitle is associated with
-    public var fileId = 0
+    open dynamic var fileId = 0
     
     /// Where the subtitle was obtained from
-    public var source: SubtitleSource = .folder
+    open var source: SubtitleSource = .folder
     
     internal convenience init(json: [String:Any], id: Int) {
         self.init()
@@ -87,7 +87,7 @@ open class Subtitle: NSObject {
     ///
     /// - Parameter format: The format to request. Defaults to `.srt`
     /// - Returns: The generated URL
-    public func url(forFormat format: SubtitleFormat = .srt) -> URL? {
+    open func url(forFormat format: SubtitleFormat = .srt) -> URL? {
         let urlString = Router.base + "/files/\(fileId)/subtitles/\(key)?format=" + format.rawValue
         return URL(string: urlString)
     }

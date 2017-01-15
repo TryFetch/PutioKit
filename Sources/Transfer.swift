@@ -6,6 +6,7 @@
 //  Copyright © 2016 Cocoon Development Ltd. All rights reserved.
 //
 
+import Foundation
 import Alamofire
 
 /// The current status of a transfer
@@ -34,73 +35,73 @@ public enum TransferStatus {
 open class Transfer {
 
     /// The number of bytes uploaded
-    public var uploaded = 0
+    open var uploaded = 0
 
     /// The number of seconds remaining
-    public var estimatedTime = 0
+    open var estimatedTime = 0
 
     /// Number of peers downloading from Put.io
-    public var peersGettingFromUs = 0
+    open var peersGettingFromUs = 0
 
     /// Should this file be extracted automatically or not?
-    public var extract = false
+    open var extract = false
 
     /// The current ration of downloaded to uploaded
-    public var currentRatio: Double = 0.0
+    open var currentRatio: Double = 0.0
 
     /// The size of the file in bytes
-    public var size = 0
+    open var size = 0
 
     /// The upload of the transfer in bytes
-    public var upSpeed = 0
+    open var upSpeed = 0
 
     /// The ID of the transfer
-    public var id = 0
+    open var id = 0
 
     /// URL source of the file
-    public var source: String?
+    open var source: String?
 
     /// The ID of the subscription used to instigate the download
-    public var subscriptionID: Int?
+    open var subscriptionID: Int?
 
     /// The status message that's shown on Put.io
-    public var statusMessage: String?
+    open var statusMessage: String?
 
     /// The status of the transfer
-    public var status: TransferStatus = .downloading
+    open var status: TransferStatus = .downloading
 
     /// The downspeed of the transfer in bytes
-    public var downSpeed = 0
+    open var downSpeed = 0
 
     /// The number of peers connected
-    public var peersConnected = 0
+    open var peersConnected = 0
 
     /// The number of bytes downloaded
-    public var downloaded = 0
+    open var downloaded = 0
 
     /// The ID of the file that's being downloaded
-    public var fileID: Int?
+    open var fileID: Int?
 
     /// The number of peers we're downloading from
-    public var peersSendingToUs = 0
+    open var peersSendingToUs = 0
 
     /// The percentage donwloaded
-    public var percentComplete = 0
+    open var percentComplete = 0
 
     /// Custom message from the track (if there is one)
-    public var trackerMessage: String?
+    open var trackerMessage: String?
 
     /// The name of the file that's being downloaded
-    public var name: String?
+    open var name: String?
 
     /// The date that the transfer was created
-    public var createdAt: String?
+    open var createdAt: String?
 
     /// The error message, if there is one
-    public var errorMessage: String?
+    open var errorMessage: String?
 
     /// The folder that the file is being saved in
-    public var parentID = 0
+    open var parentID = 0
 
     /**
      Create an empty transfer

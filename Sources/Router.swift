@@ -30,6 +30,7 @@ enum Router: URLRequestConvertible {
     case getSubtitles(Int)
     case setVideoPosition(Int, Int)
     case deleteVideoPosition(Int)
+    case getEvents
     
     case transfers
     case cleanTransfers
@@ -68,6 +69,8 @@ enum Router: URLRequestConvertible {
             return (.post, "/files/\(id)/start-from", ["time": position])
         case .deleteVideoPosition(let id):
             return (.post, "/files/\(id)/start-from/delete", [:])
+        case .getEvents:
+            return (.get, "/events/list", [:])
         
         case .transfers:
             return (.get, "/transfers/list", [:])
