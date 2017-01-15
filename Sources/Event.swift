@@ -56,15 +56,76 @@ open class Event: NSObject {
     /// The username of the person sharing the file this event relates to
     open var sharingUsername: String?
     
+    /// The date the event was created
+    open var createdAt: Date?
+    
     internal convenience init(json: [String:Any]) {
         self.init()
+        
+        if let typeString = json["type"] as? String {
+            type = {
+                switch typeString {
+                case "zip_created":
+                    return .zipCreated
+                case "transfer_from_rss_error":
+                    return .transferFromRSSError
+                case "file_shared":
+                    return .fileShared
+                case "transfer_completed":
+                    return .transferCompleted
+                default:
+                    return .unknown
+                }
+            }()
+        }
+        
+        fileId = json["file_id"] as? Int
+        fileSize = json["file_size"] as? Int
+        transferSize = json["transfer_size"] as? Int
+        sharingUsername = json["sharing_user_name"] as? String
+        
+        if let fileName = json["file_name"] as? String {
+            name = fileName
+        } else if let transferName = json["transfer_name"] as? String {
+            name = transferName
+        } else if type == .zipCreated {
+            name = "You requested we zip some files and they are ready"
+        } else {
+            name = "Unknown event"
+        }
+        
+        if let dateString = json["created_at"] as? String {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:s"
+            createdAt = formatter.date(from: dateString)
+        }
+    
     }
     
 }
 
 extension Putio {
-
-    public class func getEvents() {
+    
+    /// Get a list of events from Put.io
+    ///
+    /// - Parameter completionHandler: The response handler
+    public class func getEvents(completionHandler: @escaping ([Event], Error?) -> Void) {
+        Putio.request(Router.getEvents) { response, error in
+            if let error = error {
+                completionHandler([], error)
+                return
+            }
+            
+            guard let json = response as? [String:Any], let events = json["events"] as? [[String:Any]] else {
+                completionHandler([], PutioError.couldNotParseJSON)
+                return
+            }
+            
+            completionHandler(events.flatMap(Event.init), error)
+        }
+    }
+    
+    public class func deleteEvents(completionHandler: @escaping (Bool) -> Void) {
         
     }
     
