@@ -1,4 +1,4 @@
-PutioKit
+# PutioKit
 [![Build Status](https://travis-ci.org/TryFetch/PutioKit.svg?branch=master)](https://travis-ci.org/TryFetch/PutioKit)
 
 ### A Swift framework for Put.io's API
