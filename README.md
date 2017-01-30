@@ -9,15 +9,25 @@ This project is currently a work in process but aims to be a feature complete wr
 
 ### CocoaPods
 
-Coming soon
+CocoaPods is the easiest way to install PutioKit for inclusion in your project. Just add the following to your Podfile.
+
+```ruby
+pod 'PutioKit', '~> 1.0'
+```
 
 ### Swift Package Manager
 
-Coming soon
+PutioKit can easily be installed via Swift Pacakge Manager (SPM).
+
+```swift
+dependencies: [
+    .Package(url: "https://github.com/TryFetch/PutioKit.git", majorVersion: 1)
+]
+```
 
 ### Manual
 
-Coming soon
+Manually install PutioKit by including the contents of the `Sources` directory in your project.
 
 ## Usage
 
