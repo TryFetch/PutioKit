@@ -63,5 +63,26 @@ class EventTests: XCTestCase {
             }
         }
     }
+    
+    func testDeleteEvents() {
+        MockRequest.shared.statusCode = 200
+        MockRequest.shared.value = [
+            "status": "OK"
+        ]
+        
+        let expect = expectation(description: "Successful response")
+        
+        Putio.deleteEvents { success in
+            XCTAssertTrue(success)
+            expect.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("wait for expectations \(error)")
+            }
+        }
+
+    }
 
 }

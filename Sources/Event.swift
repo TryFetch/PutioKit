@@ -125,8 +125,18 @@ extension Putio {
         }
     }
     
+    /// Clear all events from Put.io
+    ///
+    /// - Parameter completionHandler: The response handler
     public class func deleteEvents(completionHandler: @escaping (Bool) -> Void) {
-        
+        Putio.request(Router.deleteEvents) { response, error in
+            if error != nil {
+                completionHandler(false)
+                return
+            }
+            
+            completionHandler(true)
+        }
     }
     
 }

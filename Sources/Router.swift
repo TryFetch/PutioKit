@@ -31,6 +31,7 @@ enum Router: URLRequestConvertible {
     case setVideoPosition(Int, Int)
     case deleteVideoPosition(Int)
     case getEvents
+    case deleteEvents
     case transfers
     case cleanTransfers
     case addTransfer(String, Int, Bool)
@@ -72,6 +73,8 @@ enum Router: URLRequestConvertible {
             return (.post, "/files/\(id)/start-from/delete", [:])
         case .getEvents:
             return (.get, "/events/list", [:])
+        case .deleteEvents:
+            return (.post, "/events/delete", [:])
         case .transfers:
             return (.get, "/transfers/list", [:])
         case .cleanTransfers:
