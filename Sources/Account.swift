@@ -29,6 +29,12 @@ open class Account: NSObject {
     /// Information about the disk
     open var diskInfo: DiskInfo?
     
+    /// How long until files on the account will be deleted
+    open var daysUntilFilesDeletion = 0
+    
+    /// URL to the user's avatar if it exists
+    open var avatar = ""
+    
     internal convenience init(json: [String:Any]) {
         self.init()
         
@@ -36,6 +42,8 @@ open class Account: NSObject {
         email = json["mail"] as? String ?? ""
         subtitleLanguages = json["subtitle_languages"] as? [String] ?? []
         defaultSubtitleLanguage = json["default_subtitle_language"] as? String
+        daysUntilFilesDeletion = json["days_until_files_deletion"] as? Int ?? 0
+        avatar = json["avatar_url"] as? String ?? ""
         
         if let disk = json["disk"] as? [String:Int] {
             diskInfo = DiskInfo(available: disk["avail"] ?? 0, used: disk["used"] ?? 0, size: disk["size"] ?? 0)

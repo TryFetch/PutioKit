@@ -27,7 +27,9 @@ class AccountTests: XCTestCase {
             "avail": 20849243836,
             "used": 32837847364,
             "size": 53687091200
-        ]
+        ],
+        "days_until_files_deletion": 2,
+        "avatar_url": "https://secure.gravatar.com/avatar/6f51d9da35df428484c9d6f0288c2b22.jpg?s=50"
     ]
     
     func testJSONInitialiser() {
@@ -41,6 +43,8 @@ class AccountTests: XCTestCase {
         XCTAssertEqual(account.diskInfo?.used, 32837847364)
         XCTAssertEqual(account.diskInfo?.size, 53687091200)
         XCTAssertNotNil(account.planExpirationDate)
+        XCTAssertEqual(account.daysUntilFilesDeletion, 2)
+        XCTAssertEqual(account.avatar, "https://secure.gravatar.com/avatar/6f51d9da35df428484c9d6f0288c2b22.jpg?s=50")
     }
 
     func testGetAccountInfo() {
