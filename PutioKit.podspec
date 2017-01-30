@@ -25,7 +25,7 @@ Pod::Spec.new do |s|
 
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  s.source       = { :git => "https://github.com/TryFetch/PutioKit.git", :commit => "f7212f3d7299534e75ea696722f02017348c53bb" }
+  s.source       = { :git => "https://github.com/TryFetch/PutioKit.git", :tag => "1.0.0" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
