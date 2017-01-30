@@ -1,5 +1,5 @@
 # PutioKit
-[![Build Status](https://travis-ci.org/TryFetch/PutioKit.svg?branch=master)](https://travis-ci.org/TryFetch/PutioKit)
+[![Build Status](https://travis-ci.org/TryFetch/PutioKit.svg?branch=master)](https://travis-ci.org/TryFetch/PutioKit) [![CocoaPods](https://img.shields.io/cocoapods/p/AFNetworking.svg)](https://cocoapods.org/pods/PutioKit) 
 
 ### A Swift framework for Put.io's API
 
