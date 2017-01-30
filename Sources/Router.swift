@@ -37,6 +37,7 @@ enum Router: URLRequestConvertible {
     case retryTransfer(Int)
     case cancelTransfers([Int])
     case getAccountInfo
+    case getSettings
     
     var result: (method: HTTPMethod, path: String, parameters: Parameters) {
         
@@ -83,6 +84,8 @@ enum Router: URLRequestConvertible {
             return (.post, "/transfers/cancel", ["transfer_ids": transfers.map { String($0) }.joined(separator: ",")])
         case .getAccountInfo:
             return (.get, "/account/info", [:])
+        case .getSettings:
+            return (.get, "/account/settings", [:])
         }
     }
     
