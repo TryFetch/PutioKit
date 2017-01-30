@@ -11,10 +11,6 @@ This project is currently a work in process but aims to be a feature complete wr
 
 Coming soon
 
-### Carthage
-
-Coming soon
-
 ### Swift Package Manager
 
 Coming soon
