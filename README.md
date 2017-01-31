@@ -47,6 +47,8 @@ Authentication depends on whether you have a server or just want to authenticate
 
 ### Examples
 
+> Full documentation can be found at https://tryfetch.github.io/PutioKit/
+
 The main methods for interacting with the API are all included on the `Putio` class. Some model specific methods will be included elsewhere. For example there is a method for retrying a transfer on the `Transfer` object itself.
 
 Some examples of methods and their usage can be seen below.
