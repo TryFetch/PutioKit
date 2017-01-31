@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PutioKit  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset="utf-8">
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+
+
+    <a title="PutioKit  Reference"></a>
+
+    <header class="header">
+      <p class="header-col header-col--primary">
+        <a class="header-link" href="index.html">
+          PutioKit Docs
+        </a>
+         (100% documented)
+      </p>
+    
+    
+    </header>
+
+    <p class="breadcrumbs">
+      <a class="breadcrumb" href="index.html">PutioKit Reference</a>
+      <img class="carat" src="img/carat.png" />
+      PutioKit  Reference
+    </p>
+
+    <div class="content-wrapper">
+      <nav class="navigation">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Account.html">Account</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Event.html">Event</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/File.html">File</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Friend.html">Friend</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Putio.html">Putio</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Settings.html">Settings</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Subtitle.html">Subtitle</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Transfer.html">Transfer</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Enums.html">Enums</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/EventType.html">EventType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/MP4Status.html">MP4Status</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/PutioError.html">PutioError</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/SubtitleFormat.html">SubtitleFormat</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/SubtitleSource.html">SubtitleSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/TransferStatus.html">TransferStatus</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Structs.html">Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Structs/DiskInfo.html">DiskInfo</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+
+        <section class="section">
+          <div class="section-content">
+            
+            <a href='#putiokit' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='putiokit'>PutioKit</h1>
+
+<p><a href="https://travis-ci.org/TryFetch/PutioKit"><img src="https://travis-ci.org/TryFetch/PutioKit.svg?branch=master" alt="Build Status"></a> <a href="https://cocoapods.org/pods/PutioKit"><img src="https://img.shields.io/cocoapods/p/AFNetworking.svg" alt="CocoaPods"></a> </p>
+<a href='#a-swift-framework-for-put-io-39-s-api' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='a-swift-framework-for-put-io-39-s-api'>A Swift framework for Put.io&rsquo;s API</h3>
+
+<p>This project is currently a work in process but aims to be a feature complete wrapper for Put.io&rsquo;s API. It&rsquo;s derived from the framework of the same name used by <a href="https://github.com/TryFetch/Fetch">Fetch</a>.</p>
+<a href='#installation' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='installation'>Installation</h2>
+<a href='#cocoapods' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='cocoapods'>CocoaPods</h3>
+
+<p>CocoaPods is the easiest way to install PutioKit for inclusion in your project. Just add the following to your Podfile.</p>
+<pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'PutioKit'</span><span class="p">,</span> <span class="s1">'~&gt; 1.0'</span>
+</code></pre>
+<a href='#swift-package-manager' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='swift-package-manager'>Swift Package Manager</h3>
+
+<p>PutioKit can easily be installed via Swift Pacakge Manager (SPM).</p>
+<pre class="highlight swift"><code><span class="nv">dependencies</span><span class="p">:</span> <span class="p">[</span>
+    <span class="o">.</span><span class="kt">Package</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="s">"https://github.com/TryFetch/PutioKit.git"</span><span class="p">,</span> <span class="nv">majorVersion</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">]</span>
+</code></pre>
+<a href='#manual' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='manual'>Manual</h3>
+
+<p>Manually install PutioKit by including the contents of the <code>Sources</code> directory in your project.</p>
+<a href='#usage' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='usage'>Usage</h2>
+
+<p>In order to access the Put.io API you&rsquo;ll need to create an OAuth app and use its client ID and secret. The following static properties can be set on the main <code>Putio</code> class.</p>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">PutioKit</span>
+
+<span class="kt">Putio</span><span class="o">.</span><span class="n">clientId</span> <span class="o">=</span> <span class="mi">1234</span> <span class="c1">// The client ID given when registering an app with Put.io</span>
+<span class="kt">Putio</span><span class="o">.</span><span class="n">redirectUri</span> <span class="o">=</span> <span class="s">"http://example.com/auth"</span> <span class="c1">// The redirect URI registered with Put.io</span>
+<span class="kt">Putio</span><span class="o">.</span><span class="n">accessToken</span> <span class="o">=</span> <span class="s">"ABC123DE"</span> <span class="c1">// The user's access token obtained from OAuth</span>
+</code></pre>
+<a href='#authentication' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='authentication'>Authentication</h3>
+
+<p>Authentication depends on whether you have a server or just want to authenticate on device. More information on these solutions can be found on <a href="https://put.io/v2/docs/gettingstarted.html#authentication-and-access">Put.io&rsquo;s API</a>.</p>
+<a href='#examples' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='examples'>Examples</h3>
+
+<p>The main methods for interacting with the API are all included on the <code>Putio</code> class. Some model specific methods will be included elsewhere. For example there is a method for retrying a transfer on the <code>Transfer</code> object itself.</p>
+
+<p>Some examples of methods and their usage can be seen below.</p>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">PutioKit</span>
+
+<span class="c1">// FILES</span>
+
+<span class="kt">Putio</span><span class="o">.</span><span class="n">getFiles</span> <span class="p">{</span> <span class="n">files</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span>
+  <span class="nf">print</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+  <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kt">Putio</span><span class="o">.</span><span class="nf">delete</span><span class="p">(</span><span class="nv">files</span><span class="p">:</span> <span class="p">[</span><span class="n">file1</span><span class="p">,</span> <span class="n">file2</span><span class="p">])</span> <span class="p">{</span> <span class="n">completed</span> <span class="k">in</span>
+  <span class="nf">print</span><span class="p">(</span><span class="n">completed</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">file</span><span class="o">.</span><span class="n">getSubtitles</span> <span class="p">{</span> <span class="n">subtitles</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span>
+  <span class="nf">print</span><span class="p">(</span><span class="n">subtitles</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// TRANSFERS</span>
+
+<span class="kt">Putio</span><span class="o">.</span><span class="n">getTransfers</span> <span class="p">{</span> <span class="n">transfers</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span>
+  <span class="nf">print</span><span class="p">(</span><span class="n">transfers</span><span class="p">)</span>
+  <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kt">Putio</span><span class="o">.</span><span class="n">cleanTransfers</span> <span class="p">{</span> <span class="n">completed</span> <span class="k">in</span>
+  <span class="nf">print</span><span class="p">(</span><span class="n">completed</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">transfer</span><span class="o">.</span><span class="n">cancel</span> <span class="p">{</span> <span class="n">completed</span> <span class="k">in</span>
+  <span class="nf">print</span><span class="p">(</span><span class="n">completed</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+          </div>
+        </section>
+
+
+      </article>
+    </div>
+    <section class="footer">
+      <p>&copy; 2017 <a class="link" href="https://github.com/TryFetch/PutioKit" target="_blank" rel="external">Cocoon Development Ltd</a>. All rights reserved. (Last updated: 2017-01-31)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.7.3</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+    </section>
+  </body>
+</div>
+</html>
